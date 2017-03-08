@@ -116,22 +116,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         for listName in listNames {
             // Create List
-            if let list = createRecordForEntity("List", inManagedObjectContext: managedObjectContext) {
+            if let list = createRecordForEntity("List", inManagedObjectContext: managedObjectContext) as? List {
                 // Populate List
-                list.setValue(listName, forKey: "name")
-                list.setValue(Date(), forKey: "createdAt")
+                list.name = listName
+                list.createdAt = NSDate()
 
                 // Add Items
                 for i in 1...10 {
                     // Create Item
-                    if let item = createRecordForEntity("Item", inManagedObjectContext: managedObjectContext) {
+                    if let item = createRecordForEntity("Item", inManagedObjectContext: managedObjectContext) as? Item {
                         // Set Attributes
-                        item.setValue("Item \(i)", forKey: "name")
-                        item.setValue(Date(), forKey: "createdAt")
-                        item.setValue(NSNumber(value: (i % 3 == 0)), forKey: "completed")
+                        item.name = "Item \(i)"
+                        item.createdAt = NSDate()
+                        item.completed = (i % 3 == 0)
 
                         // Set List Relationship
-                        item.setValue(list, forKey: "list")
+                        item.list = list
                     }
                 }
             }
